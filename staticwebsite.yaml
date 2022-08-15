@@ -97,9 +97,15 @@ Resources:
           AcmCertificateArm: !Ref Certificate 
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportedMethod: sni-only
+        Origins:
+          - CustomOriginConfig:
+              HTTPSPort: 443
+            DomainName: !Join [".", [!Ref 'WWWBucket', !FindInMap [ RegionMap, !Ref 'AWS::Region', websiteendpoint]] 
+            Id: 
+            
 
 
-  myDNS:
+  DNSZone:
     Type: AWS::Route53::RecordSetGroup
     Properties:
       HostedZoneName: !Sub '${DomainName}.'
